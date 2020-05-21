@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Traits\ConsumesExternalService;
 
-class fileService{
+class FileService{
 
     use ConsumesExternalService;
 
