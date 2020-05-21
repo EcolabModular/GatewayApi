@@ -9,10 +9,12 @@ class SchedularyService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.schedularies.base_uri');
+        $this->secret = config('services.schedularies.secret');
     }
 
     public function getAll(){

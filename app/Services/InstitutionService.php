@@ -9,10 +9,12 @@ class InstitutionService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.institutions.base_uri');
+        $this->secret = config('services.institutions.secret');
     }
 
     public function getAll(){

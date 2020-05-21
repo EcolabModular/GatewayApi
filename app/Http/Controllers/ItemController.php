@@ -6,12 +6,13 @@ use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Services\ItemService;
 use Illuminate\Http\Response;
+use App\Services\LaboratoryService;
 
 class ItemController extends Controller
 {
     use ApiResponser;
     public $itemService;
-
+    public $laboratoryService;
 
 
     /**
@@ -19,9 +20,10 @@ class ItemController extends Controller
      *
      * @return void
      */
-    public function __construct(ItemService $itemService)
+    public function __construct(ItemService $itemService, LaboratoryService $laboratoryService)
     {
         $this->itemService = $itemService;
+        $this->laboratoryService = $laboratoryService;
     }
 
     /**
@@ -40,6 +42,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $this->laboratoryService->getOne($request['laboratory_id']);
+
         return $this->successResponse($this->itemService->create($request->all()), Response::HTTP_CREATED);
     }
     /**
@@ -58,6 +62,7 @@ class ItemController extends Controller
      */
     public function update(Request $request,$item)
     {
+        $this->laboratoryService->getOne($request['laboratory_id']);
         return $this->successResponse($this->itemService->edit($request->all(),$item));
     }
     /**

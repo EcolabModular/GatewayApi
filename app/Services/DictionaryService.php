@@ -9,10 +9,12 @@ class DictionaryService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.dictionaries.base_uri');
+        $this->secret = config('services.dictionaries.secret');
     }
 
     public function getAll(){

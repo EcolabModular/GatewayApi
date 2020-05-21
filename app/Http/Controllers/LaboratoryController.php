@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\InstitutionService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,7 +12,7 @@ class LaboratoryController extends Controller
 {
     use ApiResponser;
     public $laboratoryService;
-
+    public $institutionService;
 
 
     /**
@@ -19,9 +20,10 @@ class LaboratoryController extends Controller
      *
      * @return void
      */
-    public function __construct(LaboratoryService $laboratoryService)
+    public function __construct(LaboratoryService $laboratoryService, InstitutionService $institutionService)
     {
         $this->laboratoryService = $laboratoryService;
+        $this->institutionService = $institutionService;
     }
 
     /**
@@ -40,6 +42,7 @@ class LaboratoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->institutionService->getOne($request['institution_id']);
         return $this->successResponse($this->laboratoryService->create($request->all()), Response::HTTP_CREATED);
     }
     /**
@@ -58,6 +61,7 @@ class LaboratoryController extends Controller
      */
     public function update(Request $request,$laboratory)
     {
+        $this->institutionService->getOne($request['institution_id']);
         return $this->successResponse($this->laboratoryService->edit($request->all(),$laboratory));
     }
     /**

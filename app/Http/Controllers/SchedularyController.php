@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use App\Services\ItemService;
 use Illuminate\Http\Response;
+use App\Services\ReportService;
 use App\Services\SchedularyService;
 
 class SchedularyController extends Controller
 {
     use ApiResponser;
     public $schedularyService;
+    public $reportService;
+    public $itemService;
 
 
 
@@ -19,9 +23,11 @@ class SchedularyController extends Controller
      *
      * @return void
      */
-    public function __construct(SchedularyService $schedularyService)
+    public function __construct(SchedularyService $schedularyService, ReportService $reportService, ItemService $itemService)
     {
         $this->schedularyService = $schedularyService;
+        $this->reportService = $reportService;
+        $this->itemService = $itemService;
     }
 
     /**
@@ -34,7 +40,9 @@ class SchedularyController extends Controller
         return $this->successResponse($this->schedularyService->getAll());
     }
 
-    public function itemSchedulary($item){
+    public function itemSchedulary($item)
+    {
+        $this->itemService->getOne($item);
         return $this->successResponse($this->schedularyService->itemschedulary($item));
     }
     /**
@@ -44,6 +52,8 @@ class SchedularyController extends Controller
      */
     public function store(Request $request)
     {
+        $this->reportService->getOne($request['report_id']);
+        $this->itemService->getOne($request['item_id']);
         return $this->successResponse($this->schedularyService->create($request->all()), Response::HTTP_CREATED);
     }
     /**
@@ -62,6 +72,8 @@ class SchedularyController extends Controller
      */
     public function update(Request $request,$schedulary)
     {
+        $this->reportService->getOne($request['report_id']);
+        $this->itemService->getOne($request['item_id']);
         return $this->successResponse($this->schedularyService->edit($request->all(),$schedulary));
     }
     /**

@@ -6,20 +6,23 @@ use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Services\ReportService;
+use App\Services\DictionaryService;
 
 class ReportController extends Controller
 {
     use ApiResponser;
     public $reportService;
+    public $dictionaryService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ReportService $reportService)
+    public function __construct(ReportService $reportService, DictionaryService $dictionaryService)
     {
         $this->reportService = $reportService;
+        $this->dictionaryService = $dictionaryService;
     }
 
     /**
@@ -38,6 +41,7 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        $this->dictionaryService->getOne($request['reportType_id']);
         return $this->successResponse($this->reportService->create($request->all()), Response::HTTP_CREATED);
     }
     /**
@@ -56,6 +60,7 @@ class ReportController extends Controller
      */
     public function update(Request $request,$report)
     {
+        $this->dictionaryService->getOne($request['reportType_id']);
         return $this->successResponse($this->reportService->edit($request->all(),$report));
     }
     /**

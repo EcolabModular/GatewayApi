@@ -6,12 +6,13 @@ use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Http\Response;
+use App\Services\ReportService;
 
 class FileController extends Controller
 {
     use ApiResponser;
     public $fileService;
-
+    public $reportService;
 
 
     /**
@@ -19,9 +20,10 @@ class FileController extends Controller
      *
      * @return void
      */
-    public function __construct(FileService $fileService)
+    public function __construct(FileService $fileService, ReportService $reportService)
     {
         $this->fileService = $fileService;
+        $this->reportService = $reportService;
     }
 
     /**
@@ -40,7 +42,11 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        //dd($request->idReport);
+
+        $this->reportService->getOne($request['idReport']);
+
+
         $multipart = [
             [
                 'name'     => 'idReport',
@@ -72,6 +78,8 @@ class FileController extends Controller
      */
     public function update(Request $request, $file)
     {
+
+        $this->reportService->getOne($request['idReport']);
 
         if($request->hasFile('file')){
             $multipart = [

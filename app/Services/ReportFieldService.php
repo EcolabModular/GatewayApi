@@ -9,10 +9,12 @@ class ReportFieldService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.reportfields.base_uri');
+        $this->secret = config('services.reportfields.secret');
     }
 
     public function getAll(){

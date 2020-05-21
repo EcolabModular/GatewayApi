@@ -16,11 +16,11 @@ trait ConsumesExternalService
             'base_uri' => $this->baseUri,
         ]);
 
-        /*
+
         if (isset($this->secret)) {
             $headers['Authorization'] = $this->secret;
         }
-        */
+
 
         $response = $client->request($method, $requestUrl, ['form_params' => $formParams, 'headers' => $headers]);
 
@@ -31,6 +31,10 @@ trait ConsumesExternalService
         $client = new Client([
             'base_uri' => $this->baseUri,
         ]);
+
+        if (isset($this->secret)) {
+            $headers['Authorization'] = $this->secret;
+        }
 
         //dd($multipart);
 

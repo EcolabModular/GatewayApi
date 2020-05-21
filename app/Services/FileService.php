@@ -9,10 +9,12 @@ class fileService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.files.base_uri');
+        $this->secret = config('services.files.secret');
     }
 
     public function getAll(){
@@ -20,7 +22,7 @@ class fileService{
     }
 
     public function create($data){
-
+        //dd($data);
         return $this->performRequestWithFile('POST', '/files', $data);
     }
 

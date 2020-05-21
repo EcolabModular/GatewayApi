@@ -9,10 +9,12 @@ class LaboratoryService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.laboratories.base_uri');
+        $this->secret = config('services.laboratories.secret');
     }
 
     public function getAll(){

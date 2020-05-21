@@ -9,10 +9,12 @@ class ReportService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.reports.base_uri');
+        $this->secret = config('services.reports.secret');
     }
 
     public function getAll(){
@@ -24,6 +26,7 @@ class ReportService{
     }
 
     public function getOne($id){
+        //dd($id);
         return $this->performRequest('GET', "/reports/{$id}");
     }
 

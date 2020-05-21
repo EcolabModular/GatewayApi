@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Services\DictionaryService;
 use App\Services\ReportFieldService;
 
 class ReportFieldController extends Controller
 {
     use ApiResponser;
     public $reportFieldService;
+    public $dictionaryService;
 
 
 
@@ -19,9 +21,10 @@ class ReportFieldController extends Controller
      *
      * @return void
      */
-    public function __construct(ReportFieldService $reportFieldService)
+    public function __construct(ReportFieldService $reportFieldService, DictionaryService $dictionaryService)
     {
         $this->reportFieldService = $reportFieldService;
+        $this->dictionaryService = $dictionaryService;
     }
 
     /**
@@ -35,7 +38,9 @@ class ReportFieldController extends Controller
     }
 
 
-    public function fieldsReport($reportType){
+    public function fieldsReport($reportType)
+    {
+        $this->dictionaryService->getOne($reportType);
         return $this->successResponse($this->reportFieldService->reportFields($reportType));
     }
 
@@ -46,6 +51,7 @@ class ReportFieldController extends Controller
      */
     public function store(Request $request)
     {
+        $this->dictionaryService->getOne($request['reportType_id']);
         return $this->successResponse($this->reportFieldService->create($request->all()), Response::HTTP_CREATED);
     }
     /**
@@ -64,6 +70,7 @@ class ReportFieldController extends Controller
      */
     public function update(Request $request,$reportField)
     {
+        $this->dictionaryService->getOne($request['reportType_id']);
         return $this->successResponse($this->reportFieldService->edit($request->all(),$reportField));
     }
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use App\Services\ItemService;
 use App\Services\NoteService;
 use Illuminate\Http\Response;
 
@@ -11,7 +12,7 @@ class NoteController extends Controller
 {
     use ApiResponser;
     public $noteService;
-
+    public $itemService;
 
 
     /**
@@ -19,9 +20,10 @@ class NoteController extends Controller
      *
      * @return void
      */
-    public function __construct(NoteService $noteService)
+    public function __construct(NoteService $noteService, ItemService $itemService)
     {
         $this->noteService = $noteService;
+        $this->itemService = $itemService;
     }
 
     /**
@@ -33,6 +35,13 @@ class NoteController extends Controller
     {
         return $this->successResponse($this->noteService->getAll());
     }
+
+    public function notesItem($item)
+    {
+        $this->itemService->getOne($item);
+        return $this->successResponse($this->noteService->itemNotes($item));
+    }
+
     /**
      * Creates an instance of note
      *
@@ -40,6 +49,7 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
+        $this->itemService->getOne($request['item_id']);
         return $this->successResponse($this->noteService->create($request->all()), Response::HTTP_CREATED);
     }
     /**
@@ -58,6 +68,7 @@ class NoteController extends Controller
      */
     public function update(Request $request,$note)
     {
+        $this->itemService->getOne($request['item_id']);
         return $this->successResponse($this->noteService->edit($request->all(),$note));
     }
     /**

@@ -9,14 +9,20 @@ class NoteService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.notes.base_uri');
+        $this->secret = config('services.notes.secret');
     }
 
     public function getAll(){
         return $this->performRequest('GET', '/notes');
+    }
+
+    public function itemNotes($id){
+        return $this->performRequest('GET', "/itemnotes/{$id}");
     }
 
     public function create($data){

@@ -2,15 +2,21 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable;
+    use Authenticatable, Authorizable, HasApiTokens;
+
+    const USUARIO_ADMIN = 4;
+    const USUARIO_REGULAR = 5;
+    const MASCULINO = 'M';
+    const FEMENINO = 'F';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +24,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'email','lastname','code','phone','gender','password','userType','institution_id'
     ];
 
     /**

@@ -9,10 +9,12 @@ class ItemService{
     use ConsumesExternalService;
 
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri = config('services.items.base_uri');
+        $this->secret = config('services.items.secret');
     }
 
     public function getAll(){
