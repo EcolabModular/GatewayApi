@@ -44,7 +44,32 @@ class ItemController extends Controller
     {
         $this->laboratoryService->getOne($request['laboratory_id']);
 
-        return $this->successResponse($this->itemService->create($request->all()), Response::HTTP_CREATED);
+
+        $multipart = [
+            [
+                'name'     => 'name',
+                'contents' => $request['name'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name' => 'description',
+                'contents' => $request['description'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name' => 'laboratory_id',
+                'contents' => $request['laboratory_id'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name'     => 'file',
+                'contents' => $request->hasfile('file') == true ? file_get_contents($request['file']) : "",
+                'filename' => $request->hasfile('file') == true ? $request->file('file')->getClientOriginalName() : ""
+            ],
+        ];
+
+
+        return $this->successResponse($this->itemService->create($multipart), Response::HTTP_CREATED);
     }
     /**
      * Returns an specific item
@@ -63,7 +88,39 @@ class ItemController extends Controller
     public function update(Request $request,$item)
     {
         $this->laboratoryService->getOne($request['laboratory_id']);
-        return $this->successResponse($this->itemService->edit($request->all(),$item));
+
+        if($request->hasFile('file')){
+            $multipart = [
+                [
+                    'name'     => 'name',
+                    'contents' => $request['name'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name' => 'description',
+                    'contents' => $request['description'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name' => 'laboratory_id',
+                    'contents' => $request['laboratory_id'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name'     => '_method',
+                    'contents' => $request['_method'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name'     => 'file',
+                    'contents' => $request->hasfile('file') == true ? file_get_contents($request['file']) : "",
+                    'filename' => $request->hasfile('file') == true ? $request->file('file')->getClientOriginalName() : ""
+                ],
+            ];
+            return $this->successResponse($this->itemService->editWithFile($multipart,$item));
+        }else{
+            return $this->successResponse($this->itemService->edit($request->all(),$item));
+        }
     }
     /**
      * Returns an specific item

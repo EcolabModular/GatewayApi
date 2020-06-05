@@ -33,7 +33,7 @@ class iuElementController extends Controller
     {
         $elements = iuElement::all();
 
-        return $this->validResponse($elements);
+        return $this->showAll($elements);
     }
 
     public function userElementsView($userType){

@@ -22,7 +22,8 @@ class ItemService{
     }
 
     public function create($data){
-        return $this->performRequest('POST', '/items', $data);
+        //dd($data);
+        return $this->performRequestWithFile('POST', '/items', $data);
     }
 
     public function getOne($id){
@@ -31,6 +32,10 @@ class ItemService{
 
     public function edit($data, $id){
         return $this->performRequest('PUT', "/items/{$id}", $data);
+    }
+
+    public function editWithFile($data,$id){
+        return $this->performRequestWithFile('POST', "/items/{$id}", $data);
     }
 
     public function delete($id){

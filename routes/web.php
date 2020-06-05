@@ -20,9 +20,12 @@ DB_PASSWORD=ecolabuser
 /**
  * Routes protected by user credentials
  */
+
+
 $router->group(['middleware' => 'auth:api'], function () use ($router) {
-    $router->get('/users/me', 'UserController@me');
+    $router->get('/info', 'UserController@me');
 });
+
 
 $router->group(['middleware' => 'client.credentials'], function() use($router){
 
@@ -35,6 +38,7 @@ $router->group(['middleware' => 'client.credentials'], function() use($router){
     $router->put('/users/{user}', 'UserController@update');
     $router->patch('/users/{user}', 'UserController@update');
     $router->delete('/users/{user}', 'UserController@destroy');
+    //$router->get('/info', 'UserController@me');
 
     /**
      *  IU ELEMENTS ROUTES

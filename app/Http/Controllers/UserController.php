@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($user);
 
-        return $this->validResponse($user);
+        return $this->showAll($user);
     }
 
     /**

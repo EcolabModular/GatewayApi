@@ -93,7 +93,7 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof QueryException) {
-            return $this->errorResponse("Unexpected error with database, SQLSTATE[" . $exception->errorInfo[0] . "] error: " . $exception->errorInfo[1],Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponse("Unexpected error with database, SQLSTATE[" . $exception->errorInfo[0] . "] error: " . $exception->errorInfo[2],Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         if(env('APP_DEBUG',false)){
