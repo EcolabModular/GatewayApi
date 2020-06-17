@@ -17,8 +17,8 @@ class ReportService{
         $this->secret = config('services.reports.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/reports');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/reports',$query);
     }
 
     public function create($data){

@@ -31,9 +31,9 @@ class NoteController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->noteService->getAll());
+        return $this->successResponse($this->noteService->getAll($request->all()));
     }
 
     public function notesItem($item)

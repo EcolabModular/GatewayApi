@@ -17,12 +17,12 @@ class InstitutionService{
         $this->secret = config('services.institutions.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/institutions');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/institutions',$query);
     }
 
     public function create($data){
-        return $this->performRequest('POST', '/institutions', $data);
+        return $this->performRequestWithFile('POST', '/institutions', $data);
     }
 
     public function getOne($id){
@@ -31,6 +31,10 @@ class InstitutionService{
 
     public function edit($data, $id){
         return $this->performRequest('PUT', "/institutions/{$id}", $data);
+    }
+
+    public function editWithFile($data, $id){
+        return $this->performRequestWithFile('POST', "/institutions/{$id}", $data);
     }
 
     public function delete($id){

@@ -17,8 +17,8 @@ class LaboratoryService{
         $this->secret = config('services.laboratories.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/laboratories');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/laboratories',$query);
     }
 
     public function create($data){

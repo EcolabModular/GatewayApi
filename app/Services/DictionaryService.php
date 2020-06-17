@@ -17,8 +17,8 @@ class DictionaryService{
         $this->secret = config('services.dictionaries.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/dictionaries');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/dictionaries',$query);
     }
 
     public function create($data){

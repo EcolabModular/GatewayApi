@@ -17,8 +17,8 @@ class SchedularyService{
         $this->secret = config('services.schedularies.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/schedularies');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/schedularies',$query);
     }
 
     public function create($data){

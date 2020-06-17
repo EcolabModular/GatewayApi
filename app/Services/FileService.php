@@ -17,8 +17,8 @@ class FileService{
         $this->secret = config('services.files.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/files');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/files',$query);
     }
 
     public function create($data){

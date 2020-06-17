@@ -30,9 +30,9 @@ class InstitutionController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->institutionService->getAll());
+        return $this->successResponse($this->institutionService->getAll($request->all()));
     }
     /**
      * Creates an instance of institution
@@ -41,7 +41,35 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->successResponse($this->institutionService->create($request->all()), Response::HTTP_CREATED);
+        $multipart = [
+            [
+                'name'     => 'name',
+                'contents' => $request['name'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name'     => 'acronym',
+                'contents' => $request['acronym'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name' => 'description',
+                'contents' => $request['description'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name' => 'address',
+                'contents' => $request['address'],
+                'headers'  => [ 'Content-Type' => 'application/json']
+            ],
+            [
+                'name'     => 'file',
+                'contents' => $request->hasfile('file') == true ? file_get_contents($request['file']) : "",
+                'filename' => $request->hasfile('file') == true ? $request->file('file')->getClientOriginalName() : ""
+            ],
+        ];
+
+        return $this->successResponse($this->institutionService->create($multipart), Response::HTTP_CREATED);
     }
     /**
      * Returns an specific institution
@@ -59,7 +87,43 @@ class InstitutionController extends Controller
      */
     public function update(Request $request,$institution)
     {
-        return $this->successResponse($this->institutionService->edit($request->all(),$institution));
+        if($request->hasFile('file')){
+            $multipart = [
+                [
+                    'name'     => 'name',
+                    'contents' => $request['name'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name'     => 'acronym',
+                    'contents' => $request['acronym'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name' => 'description',
+                    'contents' => $request['description'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name' => 'address',
+                    'contents' => $request['address'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name'     => '_method',
+                    'contents' => $request['_method'],
+                    'headers'  => [ 'Content-Type' => 'application/json']
+                ],
+                [
+                    'name'     => 'file',
+                    'contents' => $request->hasfile('file') == true ? file_get_contents($request['file']) : "",
+                    'filename' => $request->hasfile('file') == true ? $request->file('file')->getClientOriginalName() : ""
+                ],
+            ];
+            return $this->successResponse($this->institutionService->editWithFile($multipart,$institution));
+        }else{
+            return $this->successResponse($this->institutionService->edit($request->all(),$institution));
+        }
     }
     /**
      * Returns an specific institution

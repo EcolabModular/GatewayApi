@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return $this->validResponse($users);
+        return $this->showAll($users);
     }
 
     /**
@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($user);
 
-        return $this->showAll($user);
+        return $this->validResponse($user);
     }
 
     /**

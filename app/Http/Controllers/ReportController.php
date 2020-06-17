@@ -30,9 +30,9 @@ class ReportController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->reportService->getAll());
+        return $this->successResponse($this->reportService->getAll($request->all()));
     }
     /**
      * Creates an instance of report

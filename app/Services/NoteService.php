@@ -17,8 +17,8 @@ class NoteService{
         $this->secret = config('services.notes.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/notes');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/notes',$query);
     }
 
     public function itemNotes($id){

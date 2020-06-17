@@ -17,8 +17,8 @@ class ItemService{
         $this->secret = config('services.items.secret');
     }
 
-    public function getAll(){
-        return $this->performRequest('GET', '/items');
+    public function getAll($query=[]){
+        return $this->performRequest('GET', '/items',$query);
     }
 
     public function create($data){

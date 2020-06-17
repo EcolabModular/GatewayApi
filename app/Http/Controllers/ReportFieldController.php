@@ -32,9 +32,9 @@ class ReportFieldController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->reportFieldService->getAll());
+        return $this->successResponse($this->reportFieldService->getAll($request->all()));
     }
 
 

@@ -31,9 +31,9 @@ class DictionaryController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->dictionaryService->getAll());
+        return $this->successResponse($this->dictionaryService->getAll($request->all()));
     }
     /**
      * Creates an instance of dictionary

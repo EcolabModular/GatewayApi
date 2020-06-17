@@ -31,9 +31,9 @@ class ItemController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->itemService->getAll());
+        return $this->successResponse($this->itemService->getAll($request->all()));
     }
     /**
      * Creates an instance of item

@@ -10,7 +10,7 @@ trait ConsumesExternalService
      * Send a request to any service
      * @return string
      */
-    public function performRequest($method, $requestUrl, $formParams = [], $headers = [])
+    public function performRequest($method, $requestUrl, $queryParams = [], $formParams = [], $headers = [])
     {
         $client = new Client([
             'base_uri' => $this->baseUri,
@@ -21,8 +21,8 @@ trait ConsumesExternalService
             $headers['Authorization'] = $this->secret;
         }
 
-
-        $response = $client->request($method, $requestUrl, ['form_params' => $formParams, 'headers' => $headers]);
+        //dd($method,$requestUrl,$queryParams,$formParams,$headers);
+        $response = $client->request($method, $requestUrl, ['query'=>$queryParams,'form_params' => $formParams, 'headers' => $headers]);
 
         return $response->getBody()->getContents();
     }

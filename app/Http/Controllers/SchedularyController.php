@@ -35,9 +35,9 @@ class SchedularyController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse($this->schedularyService->getAll());
+        return $this->successResponse($this->schedularyService->getAll($request->all()));
     }
 
     public function itemSchedulary($item)
