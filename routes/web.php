@@ -71,7 +71,7 @@ $router->group(['middleware' => 'client.credentials'], function() use($router){
     $router->put('/files/{file}', 'FileController@update');
     $router->patch('/files/{file}', 'FileController@update');
     $router->delete('/files/{file}', 'FileController@destroy');
-
+    $router->post('/files/makereport', 'FileController@makeReport');
     /**
      * INSTITUTIONS ROUTES
      */

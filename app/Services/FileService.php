@@ -26,6 +26,10 @@ class FileService{
         return $this->performRequestWithFile('POST', '/files', $data);
     }
 
+    public function createReport($data){
+        return $this->performRequest('POST', '/files/makereport', $data);
+    }
+
     public function getOne($id){
         return $this->performRequest('GET', "/files/{$id}");
     }

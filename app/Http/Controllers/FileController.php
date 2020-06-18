@@ -62,6 +62,11 @@ class FileController extends Controller
         //dd($multipart);
         return $this->successResponse($this->fileService->create($multipart), Response::HTTP_CREATED);
     }
+
+    public function makeReport(Request $request)
+    {
+        return $this->successResponse($this->fileService->createReport($request->all()), Response::HTTP_CREATED);
+    }
     /**
      * Returns an specific file
      *
